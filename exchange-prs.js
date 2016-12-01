@@ -27,7 +27,7 @@ module.exports = function (ctx, cb) {
     .then(function (prs) {
       var result = prs
         .sort(function(a, b){
-          return new Date(b.updated_at) - new Date(a.updated_at);
+          return new Date(a.updated_at) - new Date(b.updated_at);
         })
         .map(function (pr) {
           return '- ' + pr.html_url + ' (' + pr.title + ')';
