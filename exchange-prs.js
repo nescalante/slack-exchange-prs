@@ -34,7 +34,8 @@ module.exports = function (ctx, cb) {
         }).join('\n');
         
       cb(null, {
-        response_type: 'in_channel',
+        // response_type: 'in_channel',
+        username: 'foo',
         text: 'Pending PRs: \n' + result
       });
     })
