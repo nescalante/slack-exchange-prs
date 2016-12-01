@@ -36,6 +36,7 @@ module.exports = function (ctx, cb) {
       cb(null, {
         // response_type: 'in_channel',
         username: 'foo',
+        botname: 'foo',
         text: 'Pending PRs: \n' + result
       });
     })
