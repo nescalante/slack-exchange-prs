@@ -4,7 +4,14 @@ module.exports = function (ctx, cb) {
   var token = ctx.data['github-token'];
   var prsPromise = [
     'mulesoft/exchange-ui',
-    'mulesoft/asset-manager'
+    'mulesoft/asset-manager',
+    'mulesoft/asset-manager-db',
+    'mulesoft/anypoint-vcs',
+    'mulesoft/anypoint-vcs-db',
+    'mulesoft/exchange-maven-facade',
+    'mulesoft/exchange-xapi',
+    'mulesoft/asset-portal-service',
+    'mulesoft/asset-portal-service-db',
   ].map(function (repo) {
     return fetchPRs(repo);
   });
@@ -25,7 +32,7 @@ module.exports = function (ctx, cb) {
         }).join('\n');
         
       cb(null, {
-        // response_type: 'in_channel', // uncomment to have the response visible to everyone on the channel
+        response_type: 'in_channel',
         text: 'Pending PRs: \n' + result
       });
     })
