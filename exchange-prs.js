@@ -22,11 +22,11 @@ module.exports = function (ctx, cb) {
         })
         .map(function (pr) {
           return '- ' + pr.html_url + ' (' + pr.title + ')';
-        });
+        }).join('\n');
         
       cb(null, {
         // response_type: 'in_channel', // uncomment to have the response visible to everyone on the channel
-        text: result
+        text: 'Pending PRs: \n' + result
       });
     })
     .catch(function (err) {
