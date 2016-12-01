@@ -26,7 +26,7 @@ module.exports = function (ctx, cb) {
         
       cb(null, {
         // response_type: 'in_channel', // uncomment to have the response visible to everyone on the channel
-        text: JSON.stringify(prs) + 'Hello, @' + ctx.body.user_name + '!'
+        text: result
       });
     })
     .catch(function (err) {
