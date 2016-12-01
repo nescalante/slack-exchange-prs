@@ -30,7 +30,7 @@ module.exports = function (ctx, cb) {
           return new Date(a.updated_at) - new Date(b.updated_at);
         })
         .map(function (pr) {
-          return '- ' + pr.html_url + ' (' + pr.title + ')';
+          return ':pushpin: ' + pr.title + '\n:link: ' + pr.html_url + '\n:hand: ' + pr.user.login + '\n';
         }).join('\n');
         
       cb(null, {
