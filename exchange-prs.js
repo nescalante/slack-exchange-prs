@@ -12,6 +12,8 @@ module.exports = function (ctx, cb) {
     'mulesoft/exchange-xapi',
     'mulesoft/asset-portal-service',
     'mulesoft/asset-portal-service-db',
+    'mulesoft/repository-service',
+    'mulesoft/repository-service-db'
   ].map(function (repo) {
     return fetchPRs(repo);
   });
