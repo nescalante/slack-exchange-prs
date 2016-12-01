@@ -3,7 +3,8 @@ var fetch = require('isomorphic-fetch');
 module.exports = function (ctx, cb) {
   var token = ctx.data['github-token'];
   var prsPromise = [
-    'mulesoft/exchange-ui'
+    'mulesoft/exchange-ui',
+    'mulesoft/asset-manager'
   ].map(function (repo) {
     return fetchPRs(repo);
   });
@@ -15,6 +16,14 @@ module.exports = function (ctx, cb) {
       }, []);
     })
     .then(function (prs) {
+      var result = prs
+        .sort(function(a, b){
+          return new Date(b.updated_at) - new Date(a.updated_at);
+        })
+        .map(function (pr) {
+          return '- ' + pr.html_url + ' (' + pr.title + ')';
+        });
+        
       cb(null, {
         // response_type: 'in_channel', // uncomment to have the response visible to everyone on the channel
         text: JSON.stringify(prs) + 'Hello, @' + ctx.body.user_name + '!'
