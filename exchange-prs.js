@@ -34,7 +34,7 @@ module.exports = function (ctx, cb) {
           const secs = ms / 1000;
           const mins = secs / 60;
           const hours = mins / 60;
-          let lastUpdated;
+          var lastUpdated;
           
           if (hours < 1) {
             lastUpdated = Math.round(mins) + ' minutes ago';
