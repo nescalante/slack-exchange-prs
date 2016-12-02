@@ -30,12 +30,23 @@ module.exports = function (ctx, cb) {
           return new Date(a.updated_at) - new Date(b.updated_at);
         })
         .map(function (pr) {
-          return '> :pushpin: ' + pr.title + '\n> :link: ' + pr.html_url + '\n> :speaking_head_in_silhouette: ' + pr.user.login + '\n';
-        }).join('> \n');
+          return {
+            fallback: pr.html_url,
+            color: "#36a64f",
+            pretext: "Optional text that appears above the attachment block",
+            author_name: pr.user.login,
+            author_link: pr.user.html_url,
+            author_icon: pr.user.avatar_url,
+            title: pr.title + ' in ' + pr.base.repo.name,
+            title_link: pr.html_url
+          };
+          // return '> :pushpin: ' + pr.title + '\n> :link: ' + pr.html_url + '\n> :speaking_head_in_silhouette: ' + pr.user.login + '\n';
+        });
         
       cb(null, {
         response_type: 'in_channel',
-        text: '*' + prs.length + ' pending PRs*: \n' + result,
+        text: '*' + prs.length + ' pending PRs*',
+        attachments: result
       });
     })
     .catch(function (err) {
