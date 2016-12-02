@@ -9,6 +9,8 @@ module.exports = function (ctx, cb) {
     'mulesoft/asset-manager-db',
     'mulesoft/asset-portal-service',
     'mulesoft/asset-portal-service-db',
+    'mulesoft/asset-review-service',
+    'mulesoft/asset-review-service-db',
     'mulesoft/exchange-maven-facade',
     'mulesoft/exchange-ui',
     'mulesoft/exchange-xapi',
