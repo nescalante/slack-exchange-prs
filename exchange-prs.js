@@ -12,6 +12,7 @@ module.exports = function (ctx, cb) {
     'mulesoft/asset-review-service',
     'mulesoft/asset-review-service-db',
     'mulesoft/exchange-custom-assets-facade',
+    'mulesoft/exchange-dependency-resolver',
     'mulesoft/exchange-graph-service',
     'mulesoft/exchange-maven-facade',
     'mulesoft/exchange-ui',
