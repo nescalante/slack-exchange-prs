@@ -17,7 +17,8 @@ module.exports = function (ctx, cb) {
     'mulesoft/exchange-xapi',
     'mulesoft/repository-service',
     'mulesoft/repository-service-db',
-    'mulesoft/exchange2-kubernetes'
+    'mulesoft/exchange2-kubernetes',
+    'mulesoft/exchange-custom-assets-facade'
   ].map(function (repo) {
     return fetchPRs(repo);
   });
