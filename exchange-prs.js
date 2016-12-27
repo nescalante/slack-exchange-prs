@@ -11,14 +11,15 @@ module.exports = function (ctx, cb) {
     'mulesoft/asset-portal-service-db',
     'mulesoft/asset-review-service',
     'mulesoft/asset-review-service-db',
+    'mulesoft/exchange-custom-assets-facade',
     'mulesoft/exchange-graph-service',
     'mulesoft/exchange-maven-facade',
     'mulesoft/exchange-ui',
     'mulesoft/exchange-xapi',
-    'mulesoft/repository-service',
-    'mulesoft/repository-service-db',
     'mulesoft/exchange2-kubernetes',
-    'mulesoft/exchange-custom-assets-facade'
+    'mulesoft/microservice-template',
+    'mulesoft/repository-service',
+    'mulesoft/repository-service-db'
   ].map(function (repo) {
     return fetchPRs(repo);
   });
