@@ -79,7 +79,11 @@ module.exports = function (ctx, cb) {
           const isUpdated = new Date(pr.updated_at) > lastReviewDate;
           
           if (isUpdated) {
-            text += 'El PR está actualizado y necesita una nueva revisión :robot_face:\n\n';
+            if (changesRequested.length) {
+              text += 'El PR está actualizado y necesita una nueva revisión :robot_face:\n\n';
+            } else {
+              text += '\n';
+            }
           } else {
             text += 'El PR está desactualizado y tiene todavía pedidos de cambios pendientes :eyes:\n\n';
           }
