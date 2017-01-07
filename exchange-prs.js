@@ -49,9 +49,9 @@ module.exports = function (ctx, cb) {
           var lastUpdated;
           
           if (hours < 1) {
-            lastUpdated = 'hace *' + Math.round(mins) + ' minuto' + (mins == 1 ? '' : 's') + '*';
+            lastUpdated = 'hace ' + Math.round(mins) + ' minuto' + (mins == 1 ? '' : 's');
           } else {
-            lastUpdated = 'hace *' + Math.round(hours) + ' hora' + (hours == 1 ? '' : 's') + '*';
+            lastUpdated = 'hace ' + Math.round(hours) + ' hora' + (hours == 1 ? '' : 's');
           }
           
           var prColor = '#eee';
@@ -60,13 +60,13 @@ module.exports = function (ctx, cb) {
           if (pr.reviews.length) {
             const changesRequested = pr.reviews
               .filter(function (review) { return review.state === 'CHANGES_REQUESTED'; })
-              .map(function (review) { return '*' + review.user.login + '*'; });
+              .map(function (review) { return review.user.login; });
             const approved = pr.reviews
               .filter(function (review) { return review.state === 'APPROVED'; })
-              .map(function (review) { return '*' + review.user.login + '*'; });
+              .map(function (review) { return review.user.login; });
             
             if (approved.length) {
-              text += listUsers(approved) + ' aprobaron el PR';
+              text += listUsers(approved) + ' aprob' + (approved.length === 1 ? 'ó' : 'aron') + ' el PR';
               
               if (!changesRequested.length) { 
                 text += ' y ya está listo para ser mergeado :muscle:';
@@ -77,13 +77,13 @@ module.exports = function (ctx, cb) {
             }
             
             if (changesRequested.length) {
-              text += listUsers(changesRequested) + ' pidieron cambios :pray:\n';
+              text += listUsers(changesRequested) + ' pidi' + (changesRequested.length === 1 ? 'ó' : 'eron') + ' cambio' + (changesRequested.length === 1 ? '' : 's') + ' :pray:\n';
               prColor = '#fb2';
             }
             
-            if (!changesRequested.lenght && !approved.length && pr.requested_reviewers.length) {
-              const requestedReviewers = pr.requested_reviewers.map(function (reviewer) { return '*' + reviewer.login + '*'; });
-              text += listUsers(requestedReviewers) + ' estan asignados para revisar el PR :nerd_face:\n';
+            if (!changesRequested.length && !approved.length && pr.requested_reviewers.length) {
+              const requestedReviewers = pr.requested_reviewers.map(function (reviewer) { return reviewer.login; });
+              text += listUsers(requestedReviewers) + ' esta' + (requestedReviewers.length === 1 ? '' : 'n') + ' asignad' + (requestedReviewers.length === 1 ? 'x' : 'os') + ' para revisar el PR :nerd_face:\n';
               prColor = '#0ad';
             }
           }
@@ -102,7 +102,7 @@ module.exports = function (ctx, cb) {
         
       cb(null, {
         response_type: 'in_channel',
-        text: 'Hola de nuevo equipo :wave:\nTienen *' + prs.length + ' PRs* pendientes :frowning:\n',
+        text: 'Hola de nuevo equipo :wave:\nTienen *' + prs.length + ' PR' + (prs.length === 1 ? '' : 's') + '* pendiente' + (prs.length === 1 ? '' : 's') + ' :frowning:\n',
         attachments: result
       });
     })
