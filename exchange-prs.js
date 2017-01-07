@@ -55,8 +55,7 @@ module.exports = function (ctx, cb) {
           }
           
           var prColor = '#eee';
-          var text = 'Actualizado ' + lastUpdated + '.\n';
-          text += 'Hubo cambios en' + pr.changed_files + ' archivos, con ' + pr.additions + ' additions y ' + pr.deletions + ' deletions\n\n';
+          var text = 'Actualizado ' + lastUpdated + '.\n\n';
           
           const changesRequested = pr.reviews
             .filter(function (review) { return review.state === 'CHANGES_REQUESTED'; })
