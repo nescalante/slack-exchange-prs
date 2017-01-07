@@ -57,34 +57,43 @@ module.exports = function (ctx, cb) {
           var prColor = '#eee';
           var text = 'Actualizado ' + lastUpdated + '.\n\n';
           
-          if (pr.reviews.length) {
-            const changesRequested = pr.reviews
-              .filter(function (review) { return review.state === 'CHANGES_REQUESTED'; })
-              .map(function (review) { return review.user.login; });
-            const approved = pr.reviews
-              .filter(function (review) { return review.state === 'APPROVED'; })
-              .map(function (review) { return review.user.login; });
+          const changesRequested = pr.reviews
+            .filter(function (review) { return review.state === 'CHANGES_REQUESTED'; })
+            .map(function (review) { return review.user.login; });
+          const approved = pr.reviews
+            .filter(function (review) { return review.state === 'APPROVED'; })
+            .map(function (review) { return review.user.login; });
+          const requestedReviewers = pr.requested_reviewers
+            .map(function (reviewer) { return reviewer.login; })
+            .filter(function (reviewer) { 
+              return !changesRequested.find(function (user) { return user === reviewer; }) &&
+                !approved.find(function (user) { return user === reviewer; });
+            });
             
-            if (approved.length) {
-              text += listUsers(approved) + ' aprob' + (approved.length === 1 ? 'ó' : 'aron') + ' el PR';
-              
-              if (!changesRequested.length) { 
-                text += ' y ya está listo para ser mergeado :muscle:';
-                prColor = '#1b6';
-              }
-              
-              text += '\n';
+          if (approved.length) {
+            text += listUsers(approved) + ' aprob' + (approved.length === 1 ? 'ó' : 'aron') + ' el PR';
+            
+            if (!changesRequested.length) { 
+              text += ' y ya está listo para ser mergeado :muscle:';
+              prColor = '#1b6';
+            } else {
+              text += ':+1:';
             }
             
-            if (changesRequested.length) {
-              text += listUsers(changesRequested) + ' pidi' + (changesRequested.length === 1 ? 'ó' : 'eron') + ' cambios :pray:\n';
-              prColor = '#fb2';
-            }
-          } else if (pr.requested_reviewers.length) {
-            const requestedReviewers = pr.requested_reviewers.map(function (reviewer) { return reviewer.login; });
+            text += '\n';
+          }
+          
+          if (changesRequested.length) {
+            text += listUsers(changesRequested) + ' pidi' + (changesRequested.length === 1 ? 'ó' : 'eron') + ' cambios :pray:\n';
+            prColor = '#fb2';
+          }
+          
+          if (requestedReviewers.length) {
             text += listUsers(requestedReviewers) + ' esta' + (requestedReviewers.length === 1 ? '' : 'n') + ' asignad' + (requestedReviewers.length === 1 ? 'x' : 'os') + ' para revisar el PR :nerd_face:\n';
             prColor = '#0ad';
-          } else {
+          }
+          
+          if (!approved.length && !changesRequested.length && !requestedReviewers.length) {
             text += 'Nadie revisó este PR, ni nadie está asignado para revisarlo :sweat:\n';
             prColor = '#d34';
           }
