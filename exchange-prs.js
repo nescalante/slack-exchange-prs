@@ -134,7 +134,7 @@ module.exports = function (ctx, cb) {
       Accept: 'application/vnd.github.black-cat-preview+json'
     };
     
-    return fetch('https://api.github.com/repos/' + repo + '/pulls/' + pr.number + '/reviews', { headers: headers })
+    return fetch('https://api.github.com/repos/' + pr.head.repo.full_name + '/pulls/' + pr.number + '/reviews', { headers: headers })
       .then(function (response) {
         return response.json();
       })
