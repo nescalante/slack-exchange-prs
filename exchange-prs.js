@@ -77,7 +77,7 @@ module.exports = function (ctx, cb) {
             }
             
             if (changesRequested.length) {
-              text += listUsers(changesRequested) + ' pidi' + (changesRequested.length === 1 ? 'ó' : 'eron') + ' cambio' + (changesRequested.length === 1 ? '' : 's') + ' :pray:\n';
+              text += listUsers(changesRequested) + ' pidi' + (changesRequested.length === 1 ? 'ó' : 'eron') + ' cambios :pray:\n';
               prColor = '#fb2';
             }
             
@@ -85,6 +85,11 @@ module.exports = function (ctx, cb) {
               const requestedReviewers = pr.requested_reviewers.map(function (reviewer) { return reviewer.login; });
               text += listUsers(requestedReviewers) + ' esta' + (requestedReviewers.length === 1 ? '' : 'n') + ' asignad' + (requestedReviewers.length === 1 ? 'x' : 'os') + ' para revisar el PR :nerd_face:\n';
               prColor = '#0ad';
+            }
+            
+            if (!changesRequested.length && !approved.length && !pr.requested_reviewers.length) {
+              text += 'Nadie revisó este PR, ni nadie está asignado para revisarlo :sweat:\n';
+              prColor = '#d34';
             }
           }
           
@@ -94,7 +99,7 @@ module.exports = function (ctx, cb) {
             author_name: pr.user.login,
             author_link: pr.user.html_url,
             author_icon: pr.user.avatar_url,
-            title: pr.title + ' in ' + pr.base.repo.name,
+            title: pr.title + ' en ' + pr.base.repo.name,
             title_link: pr.html_url,
             text: text
           };
