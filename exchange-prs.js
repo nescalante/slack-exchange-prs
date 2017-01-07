@@ -55,7 +55,8 @@ module.exports = function (ctx, cb) {
           }
           
           var prColor = '#eee';
-          var text = 'Actualizado ' + lastUpdated + '.\n\n';
+          var text = 'Actualizado ' + lastUpdated + '.\n';
+          text += 'Hubo cambios en' + pr.changed_files + ' archivos, con ' + pr.additions + ' additions y ' + pr.deletions + ' deletions\n\n';
           
           const changesRequested = pr.reviews
             .filter(function (review) { return review.state === 'CHANGES_REQUESTED'; })
@@ -89,7 +90,11 @@ module.exports = function (ctx, cb) {
           }
           
           if (requestedReviewers.length) {
-            text += listUsers(requestedReviewers) + ' esta' + (requestedReviewers.length === 1 ? '' : 'n') + ' asignad' + (requestedReviewers.length === 1 ? 'x' : 'os') + ' para revisar el PR :nerd_face:\n';
+            if (approved.length || changesRequested.length) {
+              text += 'Además, ';
+            }
+            
+            text += listUsers(requestedReviewers) + ' está' + (requestedReviewers.length === 1 ? '' : 'n') + ' asignad' + (requestedReviewers.length === 1 ? 'x' : 'os') + ' para revisar el PR :nerd_face:\n';
             prColor = '#0ad';
           }
           
