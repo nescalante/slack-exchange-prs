@@ -112,7 +112,6 @@ module.exports = function (ctx, cb) {
             }
             
             text += listUsers(requestedReviewers) + ' está' + (requestedReviewers.length === 1 ? '' : 'n') + ' asignad' + (requestedReviewers.length === 1 ? 'x' : 'os') + ' para revisar el PR :nerd_face:\n';
-            prColor = '#0ad';
           }
           
           if (!approved.length && !changesRequested.length && !requestedReviewers.length) {
