@@ -55,7 +55,7 @@ module.exports = function (ctx, cb) {
           }
           
           var prColor = '#eee';
-          var text = 'Actualizado ' + lastUpdated + '.\n\n';
+          var text = 'Actualizado ' + lastUpdated + '.\n';
           
           const changesRequested = pr.reviews
             .filter(function (review) { return review.state === 'CHANGES_REQUESTED'; })
@@ -69,6 +69,20 @@ module.exports = function (ctx, cb) {
               return !changesRequested.find(function (user) { return user === reviewer; }) &&
                 !approved.find(function (user) { return user === reviewer; });
             });
+          const lastReviewDate = pr.reviews.reduce(function (prev, current) {
+            if (current.state === 'CHANGES_REQUESTED' && new Date(current.submitted_at) > prev) {
+              return new Date(current.submitted_at);
+            }
+            
+            return prev;
+          }, 0);
+          const isUpdated = new Date(pr.updated_at) > lastReviewDate;
+          
+          if (isUpdated) {
+            text += 'El PR está actualizado y necesita una nueva revisión :robot_face:\n\n';
+          } else {
+            text += 'El PR está desactualizado y tiene todavía pedidos de cambios pendientes :eyes:\n\n';
+          }
             
           if (approved.length) {
             text += listUsers(approved) + ' aprob' + (approved.length === 1 ? 'ó' : 'aron') + ' el PR';
