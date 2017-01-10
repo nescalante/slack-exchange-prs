@@ -138,7 +138,8 @@ module.exports = function (ctx, cb) {
             author_icon: pr.user.avatar_url,
             title: pr.title + ' en ' + pr.base.repo.name,
             title_link: pr.html_url,
-            text: text
+            text: text,
+            mrkdwn: true
           };
         });
         
