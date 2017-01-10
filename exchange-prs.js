@@ -126,7 +126,7 @@ module.exports = function (ctx, cb) {
           if (pr.labels.length) {
             text += 'Labels:\n'
             pr.labels.map(function (label) {
-              text += label.name + ' ';
+              text += '`' + label.name + '` ';
             });
           }
           
