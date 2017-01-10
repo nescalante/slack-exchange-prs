@@ -35,6 +35,10 @@ module.exports = function (ctx, cb) {
       var prsWithReviews = prs.map(addReviews);
       
       return Promise.all(prsWithReviews);
+    }).then(function (prs) {
+      var prsWithLabels = prs.map(addLabels);
+      
+      return Promise.all(prsWithLabels);
     })
     .then(function (prs) {
       var result = prs
@@ -119,6 +123,13 @@ module.exports = function (ctx, cb) {
             prColor = '#d34';
           }
           
+          if (pr.labels.length) {
+            text += 'Labels:\n'
+            pr.labels.map(function (label) {
+              text += label + ' ';
+            });
+          }
+          
           return {
             fallback: pr.html_url,
             color: prColor,
@@ -171,6 +182,23 @@ module.exports = function (ctx, cb) {
       })
       .then(function (json) {
         pr.reviews = json;
+        
+        return pr;
+      });
+  }
+  
+  function addLabels(pr) {
+    var headers = {
+      Authorization: 'token ' + token,
+      Accept: 'application/vnd.github.black-cat-preview+json'
+    };
+    
+    return fetch('https://api.github.com/repos/' + pr.head.repo.full_name + '/issues/' + pr.number + '/labels', { headers: headers })
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (json) {
+        pr.labels = json;
         
         return pr;
       });
