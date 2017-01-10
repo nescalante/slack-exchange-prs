@@ -126,7 +126,7 @@ module.exports = function (ctx, cb) {
           if (pr.labels.length) {
             text += 'Labels:\n'
             pr.labels.map(function (label) {
-              text += '`' + label.name + '` ';
+              text += label.name + ' ';
             });
           }
           
@@ -138,8 +138,7 @@ module.exports = function (ctx, cb) {
             author_icon: pr.user.avatar_url,
             title: pr.title + ' en ' + pr.base.repo.name,
             title_link: pr.html_url,
-            text: text,
-            mrkdwn: true
+            text: text
           };
         });
         
