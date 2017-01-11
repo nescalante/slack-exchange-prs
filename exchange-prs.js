@@ -61,12 +61,21 @@ module.exports = function (ctx, cb) {
           var prColor = '#eee';
           var text = 'Actualizado ' + lastUpdated + '.\n';
           
-          const changesRequested = pr.reviews
-            .filter(function (review) { return review.state === 'CHANGES_REQUESTED'; })
-            .map(function (review) { return review.user.login; });
-          const approved = pr.reviews
+          var approved = pr.reviews
             .filter(function (review) { return review.state === 'APPROVED'; })
             .map(function (review) { return review.user.login; });
+          approved = approved.filter(function(item, pos) {
+            return approved.indexOf(item) === pos;
+          });
+          var changesRequested = pr.reviews
+            .filter(function (review) { return review.state === 'CHANGES_REQUESTED'; })
+            .map(function (review) { return review.user.login; })
+            .filter(function (reviewer) { 
+              return !approved.find(function (user) { return user === reviewer; });
+            });
+          changesRequested = changesRequested.filter(function(item, pos) {
+            return changesRequested.indexOf(item) === pos;
+          });
           const requestedReviewers = pr.requested_reviewers
             .map(function (reviewer) { return reviewer.login; })
             .filter(function (reviewer) { 
