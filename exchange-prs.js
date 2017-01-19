@@ -15,6 +15,7 @@ module.exports = function (ctx, cb) {
     'mulesoft/exchange-dependency-resolver',
     'mulesoft/exchange-graph-service',
     'mulesoft/exchange-maven-facade',
+    'mulesoft/exchange-search-service',
     'mulesoft/exchange-ui',
     'mulesoft/exchange-xapi',
     'mulesoft/exchange2-kubernetes',
