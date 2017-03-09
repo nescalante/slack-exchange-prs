@@ -11,6 +11,7 @@ module.exports = function (ctx, cb) {
     'mulesoft/asset-portal-service-db',
     'mulesoft/asset-review-service',
     'mulesoft/asset-review-service-db',
+    'mulesoft/exchange-auth-components',
     'mulesoft/exchange-custom-assets-facade',
     'mulesoft/exchange-dependency-resolver',
     'mulesoft/exchange-graph-service',
