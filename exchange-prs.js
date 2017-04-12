@@ -193,6 +193,8 @@ module.exports = function (ctx, cb) {
       .then(function (json) {
         pr.reviews = json;
         
+        throw new Error(JSON.stringify(json));
+        
         return pr;
       });
   }
