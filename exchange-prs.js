@@ -188,12 +188,12 @@ module.exports = function (ctx, cb) {
     
     return fetch('https://api.github.com/repos/' + pr.head.repo.full_name + '/pulls/' + pr.number + '/reviews', { headers: headers })
       .then(function (response) {
+        if (response.status !== 200) return [];
+        
         return response.json();
       })
       .then(function (json) {
         pr.reviews = json;
-        
-        throw new Error(JSON.stringify(json));
         
         return pr;
       });
