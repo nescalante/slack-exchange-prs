@@ -62,13 +62,13 @@ module.exports = function (ctx, cb) {
           var prColor = '#eee';
           var text = 'Actualizado ' + lastUpdated + '.\n';
           
-          var approved = pr.reviews
+          var approved = (pr.reviews || [])
             .filter(function (review) { return review.state === 'APPROVED'; })
             .map(function (review) { return review.user.login; });
           approved = approved.filter(function(item, pos) {
             return approved.indexOf(item) === pos;
           });
-          var changesRequested = pr.reviews
+          var changesRequested = (pr.reviews || [])
             .filter(function (review) { return review.state === 'CHANGES_REQUESTED'; })
             .map(function (review) { return review.user.login; })
             .filter(function (reviewer) { 
